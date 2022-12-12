@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <title>자산생성</title>
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>자산 생성 페이지입니다.</h1>
+            <p>자산생성에 필요한 정보를 입력해주세요.</p>
+
+            <label class="form-label"> ID</label>
+            <input type="text" class="form-control" id="id">
+
+            <label class="form-label"> Color</label>
+            <input type="text" class="form-control" id="color">
+
+            <label class="form-label"> size</label>
+            <input type="text" class="form-control" id="size">
+
+            <label class="form-label"> owner</label>
+            <input type="text" class="form-control" id="owner">
+
+            <label class="form-label"> Appraisedvalue</label>
+            <input type="text" class="form-control" id="Appraisedvalue">
+
+            <br>
+            <button class="btn btn-success" id="btn-create">자산생성</button>
+        </div>
+
+    </body>
+    <style>
+
+    </style>
+    <script>//get은 생성, post전달
+        $('#id') //id input값 read
+        $('#btn-create').click(()=>{
+            const id = $('#id').val()
+            const color = $('#color').val()
+            const size = $('#size').val()
+            const owner = $('#owner').val()
+            const Appraisedvalue = $('#Appraisedvalue').val()
+            console.log(id,color,size,owner,Appraisedvalue)
+            
+            $.post("/createAsset", {id,color,size,owner,Appraisedvalue}, (data)=>{//data라는 변수에 request에 실려온 데이터들이 다 들어감
+                //response 받는 부분!
+                console.log(data)
+                $('#result').append('<p>${data.result}</p>')
+                
+        })
+    }) //따로 지정안하면 json으로 알아서 들어감 (변수이름을 json태그로 들어감)
+    
+    </script>
+
+
+</html>

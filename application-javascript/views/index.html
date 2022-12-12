@@ -1,0 +1,78 @@
+<html>
+<head>
+    <!-- 외부모듈추가 -->
+    <!-- Bootstrap include -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- fontawsome -->
+<!--     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v3.1.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/v4-shims.css">
+
+ -->
+    <!-- jquery 버전 유의 -->
+    <!-- slim/jquery, 3.1.0 윗 버전에서 ajax가 작동하지 않는 오류 확인 -->
+    <!-- Bootstrap의 CDN을 copy&paste 하되 Line 8의 버전만 3.1.0으로 수정하세요 -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+
+</head>
+<body>
+    <div class="container">
+        <!-- 인풋 폼 -->
+        <!-- 타이틀부 -->
+        <div class="row justify-content-md-center">
+            <!-- <i class="fas fa-surprise" style="font-size: 150px;color:gainsboro"></i> -->
+            <div class="col-lg">
+                <h1>Hyperledger Fabric 기반 투표시스템</h1>
+                <hr>
+            </div> 
+        </div>
+        <!-- 투표 등록부 -->
+        <div class="row justify-content-md-center">
+            <div class="col-lg">
+                <div id="register-result"></div>
+                <h3>투표 </h3>
+                후보자 <br><input type="radio" id="candidate" value="1" >1. 오한수<br>
+                <br><input type="radio" id="candidate" value="2" >2. 최재호<br>
+                <br>투표장: 원천동주민센터 <br>
+                <button class="btn btn-primary" id="vote_btn">투표 완료</button>
+                <br><br>
+            </div>   
+        </div>
+
+</body>
+<script>
+    const date = new Date();
+    // 투표버튼 이벤트
+    $("#vote_btn").click(()=>{
+        const candidate = $("#candidate").val();
+        const location = "원천동주민센터";
+        const time = date.toString();
+        const url = "/vote"
+        //console.log(param)
+
+        // email이라는 파라메터에 위의 value를 넣음
+        $.post(url, {candidate: candidate, location:location, time:time}, (data,status)=>{
+            // http 상태 코드가 200(success)이라면
+            if(status == "success"){
+                // 성공했다는 alert창을 띄움
+                $('#register-result').empty();
+                $('#register-result').fadeIn(500);
+                $('#register-result').append("<div id='success' class='alert alert-success'>투표가 완료되었습니다.</div>");
+                $('#register-result').fadeOut(4000);
+            }
+            else{
+                $('#register-result').empty();
+                $('#register-result').fadeIn(500);
+                $('#register-result').append("<div id='fail' class='alert alert-fail'>wrong.</div>");
+                $('#register-result').fadeOut(4000);
+            }
+        })
+    })
+
+</script>
+    
+</html>
